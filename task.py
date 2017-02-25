@@ -19,15 +19,23 @@ class Task:
     self.logger = logging.getLogger("Task")
 
     task_info = json_data["Task Info"]
-    task_metrics = json_data["Task Metrics"]
-
+    #if "Task Metrics" not in json_data: print "printing ", json_data.keys(), json_data
+    #task_metrics = json_data["Task Metrics"]
+    key= "Task Metrics" if "Task Metrics" in json_data else 'Task Info'
+    task_metrics = json_data[key]
     self.start_time = task_info["Launch Time"]
     self.finish_time = task_info["Finish Time"]
     self.executor = task_info["Host"]
-    self.executor_run_time = task_metrics["Executor Run Time"]
-    self.executor_deserialize_time = task_metrics["Executor Deserialize Time"]
-    self.result_serialization_time = task_metrics["Result Serialization Time"]
-    self.gc_time = task_metrics["JVM GC Time"]
+    if key == "Task Metrics":
+      self.executor_run_time = task_metrics["Executor Run Time"]
+      self.executor_deserialize_time = task_metrics["Executor Deserialize Time"]
+      self.result_serialization_time = task_metrics["Result Serialization Time"]
+      self.gc_time = task_metrics["JVM GC Time"]
+    else:
+      self.executor_run_time = 0.0 # ToDo check this
+      self.executor_deserialize_time = 0.0 # ToDo check this
+      self.result_serialization_time = 0.0 #ToDo check this
+      self.gc_time = 0.0 # ToDo check this
     # TODO: looks like this is never used.
     self.executor_id = task_info["Executor ID"]
 
