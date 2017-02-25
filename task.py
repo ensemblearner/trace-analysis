@@ -64,10 +64,13 @@ class Task:
     self.input_read_time = 0
     self.input_read_method = "unknown"
     self.input_mb = 0
+    #print "task metrics ", task_metrics
     if INPUT_METRICS_KEY in task_metrics:
       input_metrics = task_metrics[INPUT_METRICS_KEY]
+      #print "keys ", input_metrics.keys()
       self.input_read_time = 0 # TODO: fill in once input time has been added.
-      self.input_read_method = input_metrics["Data Read Method"]
+      #self.input_read_method = input_metrics["Data Read Method"]
+      self.input_read_method = input_metrics["Records Read"]
       self.input_mb = input_metrics["Bytes Read"] / 1048576.
 
     # TODO: add write time and MB.
@@ -82,6 +85,7 @@ class Task:
     SHUFFLE_READ_METRICS_KEY = "Shuffle Read Metrics"
     if SHUFFLE_READ_METRICS_KEY not in task_metrics:
       if (task_info["Locality"] != "NODE_LOCAL") and (task_info["Locality"] != "PROCESS_LOCAL"):
+      #if task_info["Locality"] != "NODE_LOCAL":
         self.data_local = False
       self.has_fetch = False
       return
