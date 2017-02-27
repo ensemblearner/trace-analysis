@@ -3,3 +3,4 @@
 *.pdf
 /data
 /figs
+*.DS_Store
