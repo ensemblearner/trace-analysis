@@ -79,17 +79,11 @@ NETWORK = [transformation_mapping[NETWORK_WAIT], transformation_mapping[SCHEDULA
 NETWORK_FINAL = [sum(map(summation, NETWORK)),0]
 OVERHEADS = [transformation_mapping[GC], transformation_mapping[TASK_DESERIAL]]
 OVERHEADS_FINAL = [sum(map(summation, OVERHEADS)),0]
-print IO_FINAL, CPU_FINAL, NETWORK_FINAL, OVERHEADS_FINAL
 data_dict  = {'io': IO_FINAL, 'cpu': CPU_FINAL, 'network': NETWORK_FINAL, 'overheads': OVERHEADS_FINAL}
 N = 1
 ind = np.arange(len(data_dict.keys()))
 width = 0.3     
 
-
-#p1 = plt.bar(ind, IO_FINAL, width=width, color='r')
-#p2 = plt.bar(ind, CPU_FINAL, width= width, color='y', bottom=IO_FINAL)
-#p3 = plt.bar(ind, NETWORK_FINAL, width=width, color='b',bottom=[IO_FINAL[j] +CPU_FINAL[j] for j in range(len(IO_FINAL))])
-#p4 = plt.bar(ind, OVERHEADS_FINAL, width= width, color='g',bottom=[IO_FINAL[j] +CPU_FINAL[j] +NETWORK_FINAL[j] for j in range(len(IO_FINAL))])
 keys = sorted(data_dict.keys())
 vals = [data_dict[key][0] for key in keys]
 for k, v in zip(keys, vals):
@@ -100,15 +94,9 @@ colors = ['r', 'g', 'b', 'y']
 
 for color, bar in zip(colors,barlist):
 	bar.set_color(color)
-#barlist[0].set_color('r')
-#barlist[0].set_color('r')
-#barlist[0].set_color('r')
-#barlist[0].set_color('r')
 plt.ylabel('Time(ms)')
 plt.title(args['title'])
-#plt.xticks(ind+width/2., ('Run Times',) )
 plt.xticks( (ind+width), keys)
-#plt.legend( (ind+width), ('IO', 'CPU', 'NETWORK','OVERHEADS'))
 
 if args['save_fig']:
 	plt.savefig(args['save_fig'],dpi=150)
