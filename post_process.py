@@ -1,6 +1,7 @@
 import os
-import sys
 import argparse
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 parser = argparse.ArgumentParser(
@@ -80,12 +81,6 @@ OVERHEADS = [transformation_mapping[GC], transformation_mapping[TASK_DESERIAL]]
 OVERHEADS_FINAL = [sum(map(summation, OVERHEADS)),0]
 print IO_FINAL, CPU_FINAL, NETWORK_FINAL, OVERHEADS_FINAL
 
-# Now lets plot
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-
 N = 1
 ind = np.arange(2)    
 width = 0.3     
@@ -98,7 +93,6 @@ p4 = plt.bar(ind, OVERHEADS_FINAL, width= width, color='g',bottom=[IO_FINAL[j] +
 plt.ylabel('Time')
 plt.title(args['title'])
 plt.xticks(ind+width/2., ('Run Times',) )
-#print IO_FINAL, CPU_FINAL, NETWORK_FINAL, OVERHEADS_FINAL
 plt.legend( (p1[0], p2[0], p3[0], p4[0]), ('IO', 'CPU', 'NETWORK','OVERHEADS'))
 if args['save_fig']:
 	plt.savefig(args['save_fig'],dpi=150)
